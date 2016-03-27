@@ -19,13 +19,13 @@ export default class CreateAccount extends React.Component {
                     <div className="col s12">
                         <h2 className="shadowed-box__header">Create Account</h2>
                         <label htmlFor="username">User Name</label>
-                        <input type="text" id="username" name="username" />
+                        <input ref="username" type="text" id="username" name="username" />
                         <label htmlFor="password">Password</label>
-                        <input type="password" id="password" name="password" />
+                        <input ref="password" type="password" id="password" name="password" />
                         <label htmlFor="fav-beers">Favorite Beers</label>
-                        <input type="text" id="fav-beers" name="fav-beers" />
+                        <input ref="favBeers" type="text" id="fav-beers" name="fav-beers" />
                         <label htmlFor="fav-styles">Favorite Styles</label>
-                        <select id="fav-styles" name="fav-styles">
+                        <select ref="favStyles" id="fav-styles" name="fav-styles">
                             <option value="" disabled>Choose your option</option>
                             <option>IPA</option>
                             <option>other</option>
@@ -43,8 +43,14 @@ export default class CreateAccount extends React.Component {
 
     @autobind @preventDefault
     _handleClick() {
-        // TODO supply account info.
-        App.dispatchAction('createAccount');
+        App.dispatchAction('createAccount', {
+            form: {
+                username: this.refs.username.getDOMNode().value,
+                password: this.refs.password.getDOMNode().value,
+                favBeers: this.refs.favBeers.getDOMNode().value,
+                favStyles: this.refs.favStyles.getDOMNode().value,
+            }
+        });
     }
 
     @autobind @preventDefault

@@ -1,4 +1,5 @@
 import { App, Action } from 'spak';
+import { autobind } from './ui/decorators';
 
 // Class decorator for setting componentName getter.
 // When registered this will be the default name of the action for dispatch.
@@ -39,8 +40,25 @@ export class Login extends Action {
 
 @action('createAccount')
 export class CreateAccount extends Action {
-    exec() {
-        this.logger.log('Attempt to create account.');
-        throw new Error('NotImplemented: CreateAccount.');
+    @autobind
+    exec({ form }) {
+        var formData = new FormData();
+        for (let prop in form) {
+            formData.append(prop, form[prop]);
+        }
+        fetch('/api/account', {
+            method: 'POST',
+            body: formData
+        }).then(this._handleFormSubmit, this._handleFetchError);
+    }
+
+    _handleFormSubmit(response) {
+        response.json().then(function(json) {
+            console.log('_handleFormSubmit json: ', json);
+        });
+    }
+
+    _handleFetchError(error) {
+        throw new Error(`Could not post to Create Account: ${error.message}.`);
     }
 }
