@@ -28,6 +28,9 @@ export default class AppVC extends React.Component {
 
         return (
             <main className={classNames('appvc', this._classes)}>
+                <div>
+                    <button className="btn" onClick={() => this._handleLogoutClick()}>Logout</button>
+                </div>
                 <div className="appvc__loader progress">
                     <div className="indeterminate"></div>
                 </div>
@@ -52,6 +55,11 @@ export default class AppVC extends React.Component {
                 title={title}
                 onComplete={this._closeModal} />
         );
+    }
+
+    @autobind
+    _handleLogoutClick() {
+        App.dispatchAction('logout', { presenter: this });
     }
 
     @autobind

@@ -57,6 +57,13 @@ export class Login extends Action {
     }
 }
 
+@action('logout')
+@propInject('userGateway')
+export class Logout extends Action {
+    exec({ presenter }) {
+        return this.userGateway.logout();
+    }
+}
 
 @action('createAccount')
 @propInject('userGateway')
@@ -65,3 +72,4 @@ export class CreateAccount extends Action {
         return this.userGateway.createAccount(form);
     }
 }
+

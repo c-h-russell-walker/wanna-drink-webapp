@@ -4,7 +4,7 @@ import { component } from 'spak/decorators';
 import { ConsoleLogger } from 'spak/providers';
 import { renderUI } from './ui';
 import UserGateway from './gateways/UserGateway';
-import { LaunchApp, Login, CreateAccount } from './actions';
+import { LaunchApp, Login, Logout, CreateAccount } from './actions';
 import UncaughtErrors from './errors/UncaughtErrors';
 
 @component('main')
@@ -17,6 +17,7 @@ class MainComponent {
             $actions: [
                 new LaunchApp(),
                 new Login(),
+                new Logout(),
                 new CreateAccount()
             ]
         };

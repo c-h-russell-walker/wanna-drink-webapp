@@ -1,22 +1,25 @@
 import ApiGateway from "./ApiGateway";
+import { formDataConverter } from '../ui/decorators';
+
 
 export default class UserGateway extends ApiGateway {
+    @formDataConverter
     login(credentials) {
-        throw new Error(`NotImplemented: UserGateway#login "${credentials.username}."`);
+        this.fetch('/login', {
+            method: 'POST',
+            body: credentials
+        });
     }
 
     logout() {
-        throw new Error('NotImplemented: UserGateway#logout.');
+        this.fetch('/logout', { method: 'POST' });
     }
 
+    @formDataConverter
     createAccount(form) {
-        let formData = new FormData();
-        for (let prop in form) {
-            formData.append(prop, form[prop]);
-        }
         this.fetch('/account', {
             method: 'POST',
-            body: formData
+            body: form
         });
     }
 }

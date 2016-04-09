@@ -9,4 +9,17 @@ function preventDefault(target, key, descriptor) {
     return descriptor;
 }
 
-export { preventDefault, autobind }
+// Decorator for transforming parameter to JS FormData object
+function formDataConverter(target, key, descriptor) {
+    var fn = descriptor.value;
+    descriptor.value = function (data) {
+        let formData = new FormData();
+        for (let prop in data) {
+            formData.append(prop, data[prop]);
+        }
+        return fn.call(this, formData);
+    };
+    return descriptor;
+}
+
+export { preventDefault, formDataConverter, autobind }
