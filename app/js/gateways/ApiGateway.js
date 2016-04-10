@@ -11,7 +11,11 @@ export default class ApiGateway {
             .finally(() => this._publishFetched(endpoint));
     }
 
-    _sendFetch(endpoint, options) {
+    _sendFetch(endpoint, options={credentials:'include'}) {
+        // Credentials options means we send cookies in request
+        if (!options.hasOwnProperty('credentials')) {
+            options['credentials'] = 'include';
+        }
         return global.fetch(`/api${endpoint}`, options);
     }
 
