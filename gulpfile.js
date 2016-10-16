@@ -180,6 +180,7 @@ gulp.task("serve", ["watch"], function () {
         server: destPath,
         host: 'wanna-drink.localtest.me',
         open: 'external',
-        middleware: [proxy]
+        middleware: [proxy],
+        https: true
     });
 });
